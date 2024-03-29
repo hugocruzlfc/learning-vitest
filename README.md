@@ -17,14 +17,53 @@ If you are developing a production application, we recommend updating the config
 export default {
   // other rules...
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+## Setup
+
+Is necessary to install the dependencies before running the project. To do this, run the following command:
+
+```bash
+npm i -D vitest @testing-library/react @vitest/ui jsdom
+
+```
+
+And include in the tsconfig.json file the following configuration:
+
+```json
+{
+  "compilerOptions": {
+    "types": ["vitest/globals"]
+  }
+}
+```
+
+And in the package.json file, include the following scripts:
+
+```json
+{
+  "scripts": {
+    "test": "vitest"
+  }
+}
+```
+
+to finish, in the `vite.config.ts` file, include the following configuration:
+
+```ts
+ test: {
+    environment: "jsdom",
+    root: "src/tests",
+    globals: true,
+  },
+```
